@@ -1,0 +1,28 @@
+def aospIconloaderlibSrcDir = file('Launcher3/iconloaderlib')
+def generatedIconloaderlibSrcDir = file("$buildDir/generated/iconloaderlib")
+
+task generateIconloaderlibSrc {
+    inputs.dir aospIconloaderlibSrcDir
+    outputs.dir generatedIconloaderlibSrcDir
+    doLast {
+        exec {
+            commandLine './generate-iconloaderlib-src.sh', aospIconloaderlibSrcDir,
+                    generatedIconloaderlibSrcDir
+        }
+    }
+}
+
+preBuild.dependsOn generateIconloaderlibSrc
+
+android {
+    sourceSets {
+        main {
+            java {
+                srcDirs += file("$generatedIconloaderlibSrcDir/java")
+            }
+            res {
+                srcDirs += file("$generatedIconloaderlibSrcDir/res")
+            }
+        }
+    }
+}

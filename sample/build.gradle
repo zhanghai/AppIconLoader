@@ -1,0 +1,53 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion '29.0.3'
+    defaultConfig {
+        applicationId 'me.zhanghai.android.appiconloader.sample'
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode Integer.parseInt(VERSION_CODE)
+        versionName VERSION
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    viewBinding {
+        enabled = true
+    }
+    signingConfigs {
+        release {
+            storeFile file(System.getenv("STORE_FILE") ?: "/dev/null")
+            storePassword System.getenv("STORE_PASSWORD")
+            keyAlias System.getenv("KEY_ALIAS")
+            keyPassword System.getenv("KEY_PASSWORD")
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.2.0-alpha03'
+    def androidx_lifecycle_version = "2.2.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$androidx_lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata:$androidx_lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$androidx_lifecycle_version"
+    implementation 'androidx.recyclerview:recyclerview:1.2.0-alpha01'
+    implementation 'com.google.android.material:material:1.2.0-alpha05'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation 'io.coil-kt:coil:0.9.5'
+    implementation 'me.zhanghai.android.fastscroll:library:1.1.1'
+    implementation project(':appiconloader')
+    implementation project(':appiconloader-coil')
+    implementation project(':appiconloader-glide')
+}

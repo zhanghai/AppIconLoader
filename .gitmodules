@@ -1,0 +1,3 @@
+[submodule "appiconloader-iconloaderlib/Launcher3"]
+	path = appiconloader-iconloaderlib/Launcher3
+	url = https://android.googlesource.com/platform/packages/apps/Launcher3
