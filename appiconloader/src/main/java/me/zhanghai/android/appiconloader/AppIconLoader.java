@@ -24,23 +24,24 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.UserHandle;
 
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Px;
 import me.zhanghai.android.appiconloader.iconloaderlib.BaseIconFactory;
 
 public class AppIconLoader {
-    @NonNull
-    private final ThreadLocal<IconFactory> mIconFactory;
+    @Px
+    private final int mIconSize;
     @NonNull
     private final Context mContext;
 
+    @NonNull
+    private final ConcurrentLinkedQueue<IconFactory> mIconFactoryPool =
+            new ConcurrentLinkedQueue<>();
+
     public AppIconLoader(@Px int iconSize, @NonNull Context context) {
-        mIconFactory = new ThreadLocal<IconFactory>() {
-            @Override
-            protected IconFactory initialValue() {
-                return new IconFactory(iconSize, context);
-            }
-        };
+        mIconSize = iconSize;
         mContext = context;
     }
 
@@ -63,8 +64,16 @@ public class AppIconLoader {
         Drawable unbadgedIcon = PackageItemInfoCompat.loadUnbadgedIcon(applicationInfo,
                 mContext.getPackageManager());
         UserHandle user = UserHandleCompat.getUserHandleForUid(applicationInfo.uid);
-        Bitmap iconBitmap = mIconFactory.get().createBadgedIconBitmap(unbadgedIcon, user,
-                false).icon;
+        IconFactory iconFactory = mIconFactoryPool.poll();
+        if (iconFactory == null) {
+            iconFactory = new IconFactory(mIconSize, mContext);
+        }
+        Bitmap iconBitmap;
+        try {
+            iconBitmap = iconFactory.createBadgedIconBitmap(unbadgedIcon, user, false).icon;
+        } finally {
+            mIconFactoryPool.offer(iconFactory);
+        }
         return new BitmapDrawable(mContext.getResources(), iconBitmap);
     }
 

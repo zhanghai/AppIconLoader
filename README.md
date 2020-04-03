@@ -88,8 +88,6 @@ icon.
 
 Please refer to [its source code](https://android.googlesource.com/platform/packages/apps/Launcher3/+/refs/heads/master/iconloaderlib/).
 
-Note that it seems a `BaseIconFactory` instance cannot be shared among multiple threads.
-
 ## License
 
     Copyright 2020 Google LLC
