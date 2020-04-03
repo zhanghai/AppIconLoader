@@ -28,6 +28,9 @@ rm -r "${LIBRARY_CLASSES_ROOT}/cache/"
 
 find "${LIBRARY_CLASSES_ROOT}" -iname '*.java' -type f -print0 | xargs -0 sed -Ei \
 -e 's/\bcom\.android\.launcher3\.icons\b/me.zhanghai.android.appiconloader.iconloaderlib/g'
+sed -Ei \
+-e '/^\s*public\s+class\s+FixedScaleDrawable\s+extends\s+DrawableWrapper\s*\{\s*$/i@androidx.annotation.RequiresApi(android.os.Build.VERSION_CODES.O)' \
+"${LIBRARY_CLASSES_ROOT}/FixedScaleDrawable.java"
 
 mkdir -p "${LIBRARY_RESOURCES_ROOT}"
 rm -rf "${LIBRARY_RESOURCES_ROOT}"
