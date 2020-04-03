@@ -27,8 +27,10 @@ import android.os.UserHandle;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.Px;
 import me.zhanghai.android.appiconloader.iconloaderlib.BaseIconFactory;
+import me.zhanghai.android.appiconloader.iconloaderlib.BitmapInfo;
 
 public class AppIconLoader {
     @Px
@@ -60,7 +62,7 @@ public class AppIconLoader {
     }
 
     @NonNull
-    public Drawable loadIcon(@NonNull ApplicationInfo applicationInfo,
+    public Drawable loadIcon(@NonNull ApplicationInfo applicationInfo, boolean isInstantApp,
                              boolean shrinkNonAdaptiveIcons) {
         Drawable unbadgedIcon = PackageItemInfoCompat.loadUnbadgedIcon(applicationInfo,
                 mContext.getPackageManager());
@@ -72,16 +74,32 @@ public class AppIconLoader {
         Bitmap iconBitmap;
         try {
             iconBitmap = iconFactory.createBadgedIconBitmap(unbadgedIcon, user,
-                    shrinkNonAdaptiveIcons).icon;
+                    shrinkNonAdaptiveIcons, isInstantApp).icon;
         } finally {
             mIconFactoryPool.offer(iconFactory);
         }
         return new BitmapDrawable(mContext.getResources(), iconBitmap);
     }
 
+    @NonNull
+    public Drawable loadIcon(@NonNull ApplicationInfo applicationInfo,
+                             boolean shrinkNonAdaptiveIcons) {
+        return loadIcon(applicationInfo, false, shrinkNonAdaptiveIcons);
+    }
+
     private static class IconFactory extends BaseIconFactory {
+        private final float[] mTempScale = new float[1];
+
         public IconFactory(@Px int iconBitmapSize, @NonNull Context context) {
             super(context, context.getResources().getConfiguration().densityDpi, iconBitmapSize);
+        }
+
+        @NonNull
+        public BitmapInfo createBadgedIconBitmap(@NonNull Drawable icon, @Nullable UserHandle user,
+                                                 boolean shrinkNonAdaptiveIcons,
+                                                 boolean isInstantApp) {
+            return super.createBadgedIconBitmap(icon, user, shrinkNonAdaptiveIcons, isInstantApp,
+                    mTempScale);
         }
     }
 }
