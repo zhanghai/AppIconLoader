@@ -51,7 +51,7 @@ following code fragment:
 ```java
 int iconSize = context.getResources().getDimensionPixelSize(R.dimen.app_icon_size);
 registry.prepend(PackageInfo.class, Drawable.class, new AppIconModelLoader.Factory(iconSize,
-        context));
+        false, context));
 ```
 
 See also the sample app's [`AppGlideModule` implementation](sample/src/main/java/me/zhanghai/android/appiconloader/sample/AppGlideModule.java).
@@ -71,7 +71,7 @@ val iconSize = context.resources.getDimensionPixelSize(R.dimen.app_icon_size)
 Coil.setDefaultImageLoader {
     ImageLoader(context) {
         componentRegistry {
-            add(AppIconFetcher(iconSize, context))
+            add(AppIconFetcher(iconSize, false, context))
         }
     }
 }
