@@ -36,3 +36,6 @@ mkdir -p "${LIBRARY_RESOURCES_ROOT}"
 rm -rf "${LIBRARY_RESOURCES_ROOT}"
 cp -r "${LAUNCHER3_RESOURCES_ROOT}" "${LIBRARY_RESOURCES_ROOT}"
 rm "${LIBRARY_RESOURCES_ROOT}/values/config.xml"
+
+find "${LIBRARY_RESOURCES_ROOT}" -iname '*.xml' -type f -print0 | xargs -0 sed -Ei \
+-e 's/\bcom\.android\.launcher3\.icons\b/me.zhanghai.android.appiconloader.iconloaderlib/g'
