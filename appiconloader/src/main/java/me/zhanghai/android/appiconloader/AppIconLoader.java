@@ -60,7 +60,8 @@ public class AppIconLoader {
     }
 
     @NonNull
-    public Drawable loadIcon(@NonNull ApplicationInfo applicationInfo) {
+    public Drawable loadIcon(@NonNull ApplicationInfo applicationInfo,
+                             boolean shrinkNonAdaptiveIcons) {
         Drawable unbadgedIcon = PackageItemInfoCompat.loadUnbadgedIcon(applicationInfo,
                 mContext.getPackageManager());
         UserHandle user = UserHandleCompat.getUserHandleForUid(applicationInfo.uid);
@@ -70,7 +71,8 @@ public class AppIconLoader {
         }
         Bitmap iconBitmap;
         try {
-            iconBitmap = iconFactory.createBadgedIconBitmap(unbadgedIcon, user, false).icon;
+            iconBitmap = iconFactory.createBadgedIconBitmap(unbadgedIcon, user,
+                    shrinkNonAdaptiveIcons).icon;
         } finally {
             mIconFactoryPool.offer(iconFactory);
         }

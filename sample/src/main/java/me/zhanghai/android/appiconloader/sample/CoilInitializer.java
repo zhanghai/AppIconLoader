@@ -42,7 +42,7 @@ public class CoilInitializer {
             //noinspection KotlinInternalInJava
             Coil.setDefaultImageLoader(new ImageLoaderBuilder(context)
                     .componentRegistry(new ComponentRegistry.Builder()
-                            .add(PackageInfo.class, new AppIconFetcher(iconSize, context))
+                            .add(PackageInfo.class, new AppIconFetcher(iconSize, false, context))
                             .build())
                     .build());
             sInitialized = true;

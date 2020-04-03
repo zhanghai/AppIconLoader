@@ -44,6 +44,6 @@ public class SynchronousAppListFragment extends AppListFragment {
     @Override
     protected AppListAdapter.IconLoader onCreateIconLoader() {
         return (imageView, packageInfo) -> imageView.setImageDrawable(mAppIconLoader.loadIcon(
-                packageInfo.applicationInfo));
+                packageInfo.applicationInfo, false));
     }
 }

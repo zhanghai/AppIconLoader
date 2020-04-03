@@ -38,12 +38,15 @@ import me.zhanghai.android.appiconloader.AppIconLoader;
 public class AppIconFetcher implements Fetcher<PackageInfo> {
     @NonNull
     private final AppIconLoader mLoader;
+    private final boolean mShrinkNonAdaptiveIcons;
     @NonNull
     private final Context mContext;
 
-    public AppIconFetcher(@Px int iconSize, @NonNull Context context) {
+    public AppIconFetcher(@Px int iconSize, boolean shrinkNonAdaptiveIcons,
+                          @NonNull Context context) {
         context = context.getApplicationContext();
         mLoader = new AppIconLoader(iconSize, context);
+        mShrinkNonAdaptiveIcons = shrinkNonAdaptiveIcons;
         mContext = context;
     }
 
@@ -52,7 +55,7 @@ public class AppIconFetcher implements Fetcher<PackageInfo> {
     public Object fetch(@NotNull BitmapPool bitmapPool, @NotNull PackageInfo packageInfo,
                         @NotNull Size size, @NotNull Options options,
                         @NotNull Continuation<? super FetchResult> continuation) {
-        Drawable icon = mLoader.loadIcon(packageInfo.applicationInfo);
+        Drawable icon = mLoader.loadIcon(packageInfo.applicationInfo, mShrinkNonAdaptiveIcons);
         return new DrawableResult(icon, true, DataSource.DISK);
     }
 

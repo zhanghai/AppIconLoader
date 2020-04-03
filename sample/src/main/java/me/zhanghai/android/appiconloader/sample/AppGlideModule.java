@@ -39,6 +39,6 @@ public class AppGlideModule extends com.bumptech.glide.module.AppGlideModule {
                                    @NonNull Registry registry) {
         int iconSize = context.getResources().getDimensionPixelSize(R.dimen.app_icon_size);
         registry.prepend(PackageInfo.class, Drawable.class, new AppIconModelLoader.Factory(iconSize,
-                context));
+                false, context));
     }
 }

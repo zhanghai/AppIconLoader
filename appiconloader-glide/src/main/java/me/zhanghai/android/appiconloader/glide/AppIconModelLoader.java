@@ -38,11 +38,14 @@ import me.zhanghai.android.appiconloader.AppIconLoader;
 public class AppIconModelLoader implements ModelLoader<PackageInfo, Drawable> {
     @NonNull
     private final AppIconLoader mLoader;
+    private final boolean mShrinkNonAdaptiveIcons;
     @NonNull
     private final Context mContext;
 
-    private AppIconModelLoader(@Px int iconSize, @NonNull Context context) {
+    private AppIconModelLoader(@Px int iconSize, boolean shrinkNonAdaptiveIcons,
+                               @NonNull Context context) {
         mLoader = new AppIconLoader(iconSize, context);
+        mShrinkNonAdaptiveIcons = shrinkNonAdaptiveIcons;
         mContext = context;
     }
 
@@ -56,7 +59,7 @@ public class AppIconModelLoader implements ModelLoader<PackageInfo, Drawable> {
     public LoadData<Drawable> buildLoadData(@NonNull PackageInfo model, int width, int height,
                                             @NonNull Options options) {
         return new LoadData<>(new ObjectKey(AppIconLoader.getIconKey(model, mContext)), new Fetcher(
-                mLoader, model.applicationInfo));
+                mLoader, model.applicationInfo, mShrinkNonAdaptiveIcons));
     }
 
     private static class Fetcher implements DataFetcher<Drawable> {
@@ -64,17 +67,20 @@ public class AppIconModelLoader implements ModelLoader<PackageInfo, Drawable> {
         private final AppIconLoader mLoader;
         @NonNull
         private final ApplicationInfo mApplicationInfo;
+        private final boolean mShrinkNonAdaptiveIcons;
 
-        public Fetcher(@NonNull AppIconLoader loader, @NonNull ApplicationInfo applicationInfo) {
+        public Fetcher(@NonNull AppIconLoader loader, @NonNull ApplicationInfo applicationInfo,
+                       boolean shrinkNonAdaptiveIcons) {
             mLoader = loader;
             mApplicationInfo = applicationInfo;
+            mShrinkNonAdaptiveIcons = shrinkNonAdaptiveIcons;
         }
 
         @Override
         public void loadData(@NonNull Priority priority,
                              @NonNull DataCallback<? super Drawable> callback) {
             try {
-                Drawable icon = mLoader.loadIcon(mApplicationInfo);
+                Drawable icon = mLoader.loadIcon(mApplicationInfo, mShrinkNonAdaptiveIcons);
                 callback.onDataReady(icon);
             } catch (Exception e) {
                 callback.onLoadFailed(e);
@@ -103,11 +109,13 @@ public class AppIconModelLoader implements ModelLoader<PackageInfo, Drawable> {
     public static class Factory implements ModelLoaderFactory<PackageInfo, Drawable> {
         @Px
         private final int mIconSize;
+        private final boolean mShrinkNonAdaptiveIcons;
         @NonNull
         private final Context mContext;
 
-        public Factory(@Px int iconSize, @NonNull Context context) {
+        public Factory(@Px int iconSize, boolean shrinkNonAdaptiveIcons, @NonNull Context context) {
             mIconSize = iconSize;
+            mShrinkNonAdaptiveIcons = shrinkNonAdaptiveIcons;
             mContext = context.getApplicationContext();
         }
 
@@ -115,7 +123,7 @@ public class AppIconModelLoader implements ModelLoader<PackageInfo, Drawable> {
         @Override
         public ModelLoader<PackageInfo, Drawable> build(
                 @NonNull MultiModelLoaderFactory multiFactory) {
-            return new AppIconModelLoader(mIconSize, mContext);
+            return new AppIconModelLoader(mIconSize, mShrinkNonAdaptiveIcons, mContext);
         }
 
         @Override
