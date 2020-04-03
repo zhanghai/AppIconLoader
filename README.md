@@ -18,6 +18,12 @@ with a white background will just blend into our app's own background.
 This library packaged the AOSP Launcher3 implementation for loading app icons, which has proper
 shadow and badging logic, and added easy integration with Glide and Coil.
 
+## Preview
+
+<a href="https://play.google.com/store/apps/details?id=me.zhanghai.android.appiconloader.sample" target="_blank"><img alt="Google Play" height="90" src="https://play.google.com/intl/en_US/badges/images/generic/en_badge_web_generic.png"/></a>
+
+[Sample APK](https://github.com/zhanghai/AppIconLoader/releases/download/v1.0.0/sample-release.apk)
+
 ## Integration
 
 Gradle:
