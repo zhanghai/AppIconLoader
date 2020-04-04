@@ -12,6 +12,8 @@ Because [`PackageManager.getApplicationIcon()`](https://developer.android.com/re
 
 This library packaged the AOSP Launcher3 implementation for loading app icons, which has proper shadow and badging logic, and added easy integration with Glide and Coil.
 
+Meanwhile, by passing `true` for the `shrinkNonAdaptiveIcons` parameter, this library can also synthesize adaptive icons for apps that don't have it.
+
 ## Preview
 
 <a href="https://play.google.com/store/apps/details?id=me.zhanghai.android.appiconloader.sample" target="_blank"><img alt="Google Play" height="90" src="https://play.google.com/intl/en_US/badges/images/generic/en_badge_web_generic.png"/></a>
