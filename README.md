@@ -50,7 +50,7 @@ following code fragment:
 
 ```java
 int iconSize = context.getResources().getDimensionPixelSize(R.dimen.app_icon_size);
-registry.prepend(PackageInfo.class, Drawable.class, new AppIconModelLoader.Factory(iconSize,
+registry.prepend(PackageInfo.class, Bitmap.class, new AppIconModelLoader.Factory(iconSize,
         false, context));
 ```
 
