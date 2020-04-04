@@ -8,15 +8,9 @@ This is not an officially supported Google product.
 
 ## Why AppIconLoader?
 
-Because [`PackageManager.getApplicationIcon()`](https://developer.android.com/reference/android/content/pm/PackageManager#getApplicationIcon(android.content.pm.ApplicationInfo))
-(or [`PackageItemInfo.loadIcon()`](https://developer.android.com/reference/android/content/pm/PackageItemInfo#loadIcon(android.content.pm.PackageManager)))
-just doesn't work well with [adaptive icons](https://developer.android.com/guide/practices/ui_guidelines/icon_design_adaptive).
-Non-adaptive icons usually have some shadow baked in (it's the recommended behavior), however
-adaptive icons never contain a shadow themselves, so we'll need to manually add the shadow or icons
-with a white background will just blend into our app's own background.
+Because [`PackageManager.getApplicationIcon()`](https://developer.android.com/reference/android/content/pm/PackageManager#getApplicationIcon(android.content.pm.ApplicationInfo)) (or [`PackageItemInfo.loadIcon()`](https://developer.android.com/reference/android/content/pm/PackageItemInfo#loadIcon(android.content.pm.PackageManager))) just doesn't work well with [adaptive icons](https://developer.android.com/guide/practices/ui_guidelines/icon_design_adaptive). Non-adaptive icons usually have some shadow baked in (it's the recommended behavior), however adaptive icons never contain a shadow themselves, so we'll need to manually add the shadow or icons with a white background will just blend into our app's own background.
 
-This library packaged the AOSP Launcher3 implementation for loading app icons, which has proper
-shadow and badging logic, and added easy integration with Glide and Coil.
+This library packaged the AOSP Launcher3 implementation for loading app icons, which has proper shadow and badging logic, and added easy integration with Glide and Coil.
 
 ## Preview
 
@@ -47,8 +41,7 @@ implementation 'me.zhanghai.android.appiconloader:appiconloader-iconloaderlib:1.
 
 See [Glide's documentation on registering a `ModuleLoader`](https://bumptech.github.io/glide/tut/custom-modelloader.html#registering-our-modelloader-with-glide).
 
-Inside your implementation of `AppGlideModule.registerComponents()`, you can have something like the
-following code fragment:
+Inside your implementation of `AppGlideModule.registerComponents()`, you can have something like the following code fragment:
 
 ```java
 int iconSize = context.getResources().getDimensionPixelSize(R.dimen.app_icon_size);
@@ -87,10 +80,7 @@ imageView.loadAny(packageInfo)
 
 ### AppIconLoader
 
-[`AppIconLoader`](appiconloader/src/main/java/me/zhanghai/android/appiconloader/AppIconLoader.java)
-is the API exposed by this library, and you can simply call `AppIconLoader.loadIcon()` to load an
-app icon. You can also use `AppIconLoader.getIconKey()` to generate a cache key for your loaded
-icon.
+[`AppIconLoader`](appiconloader/src/main/java/me/zhanghai/android/appiconloader/AppIconLoader.java) is the API exposed by this library, and you can simply call `AppIconLoader.loadIcon()` to load an app icon. You can also use `AppIconLoader.getIconKey()` to generate a cache key for your loaded icon.
 
 ### Launcher3 iconloaderlib
 
