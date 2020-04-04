@@ -22,7 +22,7 @@ shadow and badging logic, and added easy integration with Glide and Coil.
 
 <a href="https://play.google.com/store/apps/details?id=me.zhanghai.android.appiconloader.sample" target="_blank"><img alt="Google Play" height="90" src="https://play.google.com/intl/en_US/badges/images/generic/en_badge_web_generic.png"/></a>
 
-[Sample APK](https://github.com/zhanghai/AppIconLoader/releases/download/v1.0.0/sample-release.apk)
+[Sample APK](https://github.com/zhanghai/AppIconLoader/releases/download/v1.1.0/sample-release.apk)
 
 ## Integration
 
@@ -30,13 +30,13 @@ Gradle:
 
 ```gradle
 // For using with Glide.
-implementation 'me.zhanghai.android.appiconloader:appiconloader-glide:1.0.0'
+implementation 'me.zhanghai.android.appiconloader:appiconloader-glide:1.1.0'
 // For using with Coil.
-implementation 'me.zhanghai.android.appiconloader:appiconloader-coil:1.0.0'
+implementation 'me.zhanghai.android.appiconloader:appiconloader-coil:1.1.0'
 // For using AppIconLoader directly.
-implementation 'me.zhanghai.android.appiconloader:appiconloader:1.0.0'
+implementation 'me.zhanghai.android.appiconloader:appiconloader:1.1.0'
 // For using Launcher3 iconloaderlib directly.
-implementation 'me.zhanghai.android.appiconloader:appiconloader-iconloaderlib:1.0.0'
+implementation 'me.zhanghai.android.appiconloader:appiconloader-iconloaderlib:1.1.0'
 ```
 
 ## Usage
