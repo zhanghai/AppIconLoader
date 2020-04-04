@@ -18,7 +18,7 @@ package me.zhanghai.android.appiconloader.sample;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Registry;
@@ -38,7 +38,7 @@ public class AppGlideModule extends com.bumptech.glide.module.AppGlideModule {
     public void registerComponents(@NonNull Context context, @NonNull Glide glide,
                                    @NonNull Registry registry) {
         int iconSize = context.getResources().getDimensionPixelSize(R.dimen.app_icon_size);
-        registry.prepend(PackageInfo.class, Drawable.class, new AppIconModelLoader.Factory(iconSize,
+        registry.prepend(PackageInfo.class, Bitmap.class, new AppIconModelLoader.Factory(iconSize,
                 false, context));
     }
 }

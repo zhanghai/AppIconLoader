@@ -18,7 +18,8 @@ package me.zhanghai.android.appiconloader.coil;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -55,8 +56,9 @@ public class AppIconFetcher implements Fetcher<PackageInfo> {
     public Object fetch(@NotNull BitmapPool bitmapPool, @NotNull PackageInfo packageInfo,
                         @NotNull Size size, @NotNull Options options,
                         @NotNull Continuation<? super FetchResult> continuation) {
-        Drawable icon = mLoader.loadIcon(packageInfo.applicationInfo, mShrinkNonAdaptiveIcons);
-        return new DrawableResult(icon, true, DataSource.DISK);
+        Bitmap icon = mLoader.loadIcon(packageInfo.applicationInfo, mShrinkNonAdaptiveIcons);
+        return new DrawableResult(new BitmapDrawable(mContext.getResources(), icon), true,
+                DataSource.DISK);
     }
 
     @Override

@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.UserHandle;
 
@@ -62,8 +61,8 @@ public class AppIconLoader {
     }
 
     @NonNull
-    public Drawable loadIcon(@NonNull ApplicationInfo applicationInfo, boolean isInstantApp,
-                             boolean shrinkNonAdaptiveIcons) {
+    public Bitmap loadIcon(@NonNull ApplicationInfo applicationInfo, boolean isInstantApp,
+                           boolean shrinkNonAdaptiveIcons) {
         Drawable unbadgedIcon = PackageItemInfoCompat.loadUnbadgedIcon(applicationInfo,
                 mContext.getPackageManager());
         UserHandle user = UserHandleCompat.getUserHandleForUid(applicationInfo.uid);
@@ -71,19 +70,17 @@ public class AppIconLoader {
         if (iconFactory == null) {
             iconFactory = new IconFactory(mIconSize, mContext);
         }
-        Bitmap iconBitmap;
         try {
-            iconBitmap = iconFactory.createBadgedIconBitmap(unbadgedIcon, user,
-                    shrinkNonAdaptiveIcons, isInstantApp).icon;
+            return iconFactory.createBadgedIconBitmap(unbadgedIcon, user, shrinkNonAdaptiveIcons,
+                    isInstantApp).icon;
         } finally {
             mIconFactoryPool.offer(iconFactory);
         }
-        return new BitmapDrawable(mContext.getResources(), iconBitmap);
     }
 
     @NonNull
-    public Drawable loadIcon(@NonNull ApplicationInfo applicationInfo,
-                             boolean shrinkNonAdaptiveIcons) {
+    public Bitmap loadIcon(@NonNull ApplicationInfo applicationInfo,
+                           boolean shrinkNonAdaptiveIcons) {
         return loadIcon(applicationInfo, false, shrinkNonAdaptiveIcons);
     }
 

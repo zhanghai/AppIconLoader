@@ -19,7 +19,7 @@ package me.zhanghai.android.appiconloader.glide;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
 
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DataSource;
@@ -35,7 +35,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.Px;
 import me.zhanghai.android.appiconloader.AppIconLoader;
 
-public class AppIconModelLoader implements ModelLoader<PackageInfo, Drawable> {
+public class AppIconModelLoader implements ModelLoader<PackageInfo, Bitmap> {
     @NonNull
     private final AppIconLoader mLoader;
     private final boolean mShrinkNonAdaptiveIcons;
@@ -56,13 +56,13 @@ public class AppIconModelLoader implements ModelLoader<PackageInfo, Drawable> {
 
     @Nullable
     @Override
-    public LoadData<Drawable> buildLoadData(@NonNull PackageInfo model, int width, int height,
-                                            @NonNull Options options) {
+    public LoadData<Bitmap> buildLoadData(@NonNull PackageInfo model, int width, int height,
+                                          @NonNull Options options) {
         return new LoadData<>(new ObjectKey(AppIconLoader.getIconKey(model, mContext)), new Fetcher(
                 mLoader, model.applicationInfo, mShrinkNonAdaptiveIcons));
     }
 
-    private static class Fetcher implements DataFetcher<Drawable> {
+    private static class Fetcher implements DataFetcher<Bitmap> {
         @NonNull
         private final AppIconLoader mLoader;
         @NonNull
@@ -78,9 +78,9 @@ public class AppIconModelLoader implements ModelLoader<PackageInfo, Drawable> {
 
         @Override
         public void loadData(@NonNull Priority priority,
-                             @NonNull DataCallback<? super Drawable> callback) {
+                             @NonNull DataCallback<? super Bitmap> callback) {
             try {
-                Drawable icon = mLoader.loadIcon(mApplicationInfo, mShrinkNonAdaptiveIcons);
+                Bitmap icon = mLoader.loadIcon(mApplicationInfo, mShrinkNonAdaptiveIcons);
                 callback.onDataReady(icon);
             } catch (Exception e) {
                 callback.onLoadFailed(e);
@@ -95,8 +95,8 @@ public class AppIconModelLoader implements ModelLoader<PackageInfo, Drawable> {
 
         @NonNull
         @Override
-        public Class<Drawable> getDataClass() {
-            return Drawable.class;
+        public Class<Bitmap> getDataClass() {
+            return Bitmap.class;
         }
 
         @NonNull
@@ -106,7 +106,7 @@ public class AppIconModelLoader implements ModelLoader<PackageInfo, Drawable> {
         }
     }
 
-    public static class Factory implements ModelLoaderFactory<PackageInfo, Drawable> {
+    public static class Factory implements ModelLoaderFactory<PackageInfo, Bitmap> {
         @Px
         private final int mIconSize;
         private final boolean mShrinkNonAdaptiveIcons;
@@ -121,7 +121,7 @@ public class AppIconModelLoader implements ModelLoader<PackageInfo, Drawable> {
 
         @NonNull
         @Override
-        public ModelLoader<PackageInfo, Drawable> build(
+        public ModelLoader<PackageInfo, Bitmap> build(
                 @NonNull MultiModelLoaderFactory multiFactory) {
             return new AppIconModelLoader(mIconSize, mShrinkNonAdaptiveIcons, mContext);
         }
