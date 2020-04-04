@@ -24,6 +24,8 @@ shadow and badging logic, and added easy integration with Glide and Coil.
 
 [Sample APK](https://github.com/zhanghai/AppIconLoader/releases/download/v1.1.0/sample-release.apk)
 
+<img src="screenshot/screenshot.png" width="49%" />
+
 ## Integration
 
 Gradle:
