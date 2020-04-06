@@ -1,0 +1,3 @@
+- Fixed crash when using shrinkNonAdaptiveIcons due to package name mismatch.
+- Added shrinkNonAdaptiveIcons as a parameter in APIs.
+- AppIconLoader.loadIcon() now returns the result Bitmap directly.

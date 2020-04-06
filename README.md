@@ -20,7 +20,7 @@ Meanwhile, by passing `true` for the `shrinkNonAdaptiveIcons` parameter, this li
 
 [Sample APK](https://github.com/zhanghai/AppIconLoader/releases/download/v1.1.0/sample-release.apk)
 
-<img src="screenshot/screenshot.png" width="49%" />
+<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="49%" />
 
 ## Integration
 

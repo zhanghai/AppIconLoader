@@ -1,0 +1,1 @@
+App icon loader from AOSP Launcher3
