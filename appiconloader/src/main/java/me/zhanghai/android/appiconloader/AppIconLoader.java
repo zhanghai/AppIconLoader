@@ -89,7 +89,8 @@ public class AppIconLoader {
         private final float[] mTempScale = new float[1];
 
         public IconFactory(@Px int iconBitmapSize, @NonNull Context context) {
-            super(context, context.getResources().getConfiguration().densityDpi, iconBitmapSize);
+            super(context, context.getResources().getConfiguration().densityDpi, iconBitmapSize,
+                    true);
         }
 
         @NonNull
