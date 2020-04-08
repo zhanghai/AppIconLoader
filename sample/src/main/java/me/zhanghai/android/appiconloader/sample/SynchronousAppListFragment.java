@@ -37,13 +37,13 @@ public class SynchronousAppListFragment extends AppListFragment {
 
         Context context = requireContext();
         mAppIconLoader = new AppIconLoader(context.getResources().getDimensionPixelSize(
-                R.dimen.app_icon_size), context.getApplicationContext());
+                R.dimen.app_icon_size), false, context.getApplicationContext());
     }
 
     @NonNull
     @Override
     protected AppListAdapter.IconLoader onCreateIconLoader() {
         return (imageView, packageInfo) -> imageView.setImageBitmap(mAppIconLoader.loadIcon(
-                packageInfo.applicationInfo, false));
+                packageInfo.applicationInfo));
     }
 }

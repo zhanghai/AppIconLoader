@@ -34,6 +34,7 @@ import me.zhanghai.android.appiconloader.iconloaderlib.BitmapInfo;
 public class AppIconLoader {
     @Px
     private final int mIconSize;
+    private final boolean mShrinkNonAdaptiveIcons;
     @NonNull
     private final Context mContext;
 
@@ -41,8 +42,10 @@ public class AppIconLoader {
     private final ConcurrentLinkedQueue<IconFactory> mIconFactoryPool =
             new ConcurrentLinkedQueue<>();
 
-    public AppIconLoader(@Px int iconSize, @NonNull Context context) {
+    public AppIconLoader(@Px int iconSize, boolean shrinkNonAdaptiveIcons,
+                         @NonNull Context context) {
         mIconSize = iconSize;
+        mShrinkNonAdaptiveIcons = shrinkNonAdaptiveIcons;
         mContext = context;
     }
 
@@ -61,8 +64,7 @@ public class AppIconLoader {
     }
 
     @NonNull
-    public Bitmap loadIcon(@NonNull ApplicationInfo applicationInfo, boolean isInstantApp,
-                           boolean shrinkNonAdaptiveIcons) {
+    public Bitmap loadIcon(@NonNull ApplicationInfo applicationInfo, boolean isInstantApp) {
         Drawable unbadgedIcon = PackageItemInfoCompat.loadUnbadgedIcon(applicationInfo,
                 mContext.getPackageManager());
         UserHandle user = UserHandleCompat.getUserHandleForUid(applicationInfo.uid);
@@ -71,7 +73,7 @@ public class AppIconLoader {
             iconFactory = new IconFactory(mIconSize, mContext);
         }
         try {
-            return iconFactory.createBadgedIconBitmap(unbadgedIcon, user, shrinkNonAdaptiveIcons,
+            return iconFactory.createBadgedIconBitmap(unbadgedIcon, user, mShrinkNonAdaptiveIcons,
                     isInstantApp).icon;
         } finally {
             mIconFactoryPool.offer(iconFactory);
@@ -79,9 +81,8 @@ public class AppIconLoader {
     }
 
     @NonNull
-    public Bitmap loadIcon(@NonNull ApplicationInfo applicationInfo,
-                           boolean shrinkNonAdaptiveIcons) {
-        return loadIcon(applicationInfo, false, shrinkNonAdaptiveIcons);
+    public Bitmap loadIcon(@NonNull ApplicationInfo applicationInfo) {
+        return loadIcon(applicationInfo, false);
     }
 
     private static class IconFactory extends BaseIconFactory {

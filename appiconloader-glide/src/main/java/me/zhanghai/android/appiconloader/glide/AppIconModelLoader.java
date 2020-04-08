@@ -38,14 +38,12 @@ import me.zhanghai.android.appiconloader.AppIconLoader;
 public class AppIconModelLoader implements ModelLoader<PackageInfo, Bitmap> {
     @NonNull
     private final AppIconLoader mLoader;
-    private final boolean mShrinkNonAdaptiveIcons;
     @NonNull
     private final Context mContext;
 
     private AppIconModelLoader(@Px int iconSize, boolean shrinkNonAdaptiveIcons,
                                @NonNull Context context) {
-        mLoader = new AppIconLoader(iconSize, context);
-        mShrinkNonAdaptiveIcons = shrinkNonAdaptiveIcons;
+        mLoader = new AppIconLoader(iconSize, shrinkNonAdaptiveIcons, context);
         mContext = context;
     }
 
@@ -59,7 +57,7 @@ public class AppIconModelLoader implements ModelLoader<PackageInfo, Bitmap> {
     public LoadData<Bitmap> buildLoadData(@NonNull PackageInfo model, int width, int height,
                                           @NonNull Options options) {
         return new LoadData<>(new ObjectKey(AppIconLoader.getIconKey(model, mContext)), new Fetcher(
-                mLoader, model.applicationInfo, mShrinkNonAdaptiveIcons));
+                mLoader, model.applicationInfo));
     }
 
     private static class Fetcher implements DataFetcher<Bitmap> {
@@ -67,20 +65,17 @@ public class AppIconModelLoader implements ModelLoader<PackageInfo, Bitmap> {
         private final AppIconLoader mLoader;
         @NonNull
         private final ApplicationInfo mApplicationInfo;
-        private final boolean mShrinkNonAdaptiveIcons;
 
-        public Fetcher(@NonNull AppIconLoader loader, @NonNull ApplicationInfo applicationInfo,
-                       boolean shrinkNonAdaptiveIcons) {
+        public Fetcher(@NonNull AppIconLoader loader, @NonNull ApplicationInfo applicationInfo) {
             mLoader = loader;
             mApplicationInfo = applicationInfo;
-            mShrinkNonAdaptiveIcons = shrinkNonAdaptiveIcons;
         }
 
         @Override
         public void loadData(@NonNull Priority priority,
                              @NonNull DataCallback<? super Bitmap> callback) {
             try {
-                Bitmap icon = mLoader.loadIcon(mApplicationInfo, mShrinkNonAdaptiveIcons);
+                Bitmap icon = mLoader.loadIcon(mApplicationInfo);
                 callback.onDataReady(icon);
             } catch (Exception e) {
                 callback.onLoadFailed(e);
