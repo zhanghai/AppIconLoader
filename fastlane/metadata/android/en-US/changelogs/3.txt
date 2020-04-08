@@ -1,0 +1,2 @@
+- Enabled shape detection by default.
+- Moved the shrinkNonAdaptiveIcons parameter to AppIconLoader constructor.
