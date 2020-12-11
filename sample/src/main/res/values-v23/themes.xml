@@ -18,7 +18,7 @@
 
 <resources>
     <style name="Platform.V23.Theme.Sample" parent="Platform.V21.Theme.Sample">
-        <item name="colorPrimaryDark">@color/system_window_scrim_daynight</item>
+        <item name="colorPrimaryDark">@color/system_window_scrim</item>
         <item name="android:windowLightStatusBar">?isLightTheme</item>
     </style>
     <style name="Platform.Theme.Sample" parent="Platform.V23.Theme.Sample" />

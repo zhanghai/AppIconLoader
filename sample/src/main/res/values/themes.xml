@@ -18,7 +18,7 @@
 
 <resources>
     <style name="Platform.V21.Theme.Sample" parent="Theme.MaterialComponents.DayNight">
-        <item name="colorPrimaryDark">@color/status_bar_background_compat_daynight</item>
+        <item name="colorPrimaryDark">@color/system_window_scrim_compat</item>
     </style>
     <style name="Platform.Theme.Sample" parent="Platform.V21.Theme.Sample" />
     <style name="Base.Theme.Sample" parent="Platform.Theme.Sample">
@@ -26,7 +26,7 @@
         <item name="windowNoTitle">true</item>
         <item name="colorPrimary">?colorSecondary</item>
         <item name="colorOnPrimary">?colorOnSecondary</item>
-        <item name="colorSecondary">@color/color_secondary_daynight</item>
+        <item name="colorSecondary">@color/color_secondary</item>
     </style>
     <style name="Theme.Sample" parent="Base.Theme.Sample" />
 </resources>

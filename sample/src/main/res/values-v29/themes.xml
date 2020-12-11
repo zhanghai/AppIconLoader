@@ -17,15 +17,8 @@
   -->
 
 <resources>
-
-    <color name="color_secondary_light">#009688</color>
-    <color name="color_secondary_dark">#80cbc4</color>
-    <color name="color_secondary">@color/color_secondary_light</color>
-
-    <color name="system_window_scrim_light">#99FFFFFF</color>
-    <color name="system_window_scrim_dark">#52000000</color>
-    <color name="system_window_scrim">@color/system_window_scrim_light</color>
-
-    <color name="system_window_scrim_compat_light">#BBBBBB</color>
-    <color name="system_window_scrim_compat">@color/system_window_scrim_compat_light</color>
+    <style name="Platform.V29.Theme.Sample" parent="Platform.V27.Theme.Sample">
+        <item name="colorPrimaryDark">@android:color/transparent</item>
+    </style>
+    <style name="Platform.Theme.Sample" parent="Platform.V29.Theme.Sample" />
 </resources>

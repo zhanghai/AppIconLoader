@@ -18,7 +18,7 @@
 
 <resources>
     <style name="Platform.V27.Theme.Sample" parent="Platform.V23.Theme.Sample">
-        <item name="android:navigationBarColor">@color/system_window_scrim_daynight</item>
+        <item name="android:navigationBarColor">?colorPrimaryDark</item>
         <item name="android:windowLightNavigationBar">?isLightTheme</item>
     </style>
     <style name="Platform.Theme.Sample" parent="Platform.V27.Theme.Sample" />

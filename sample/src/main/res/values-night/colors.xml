@@ -18,9 +18,9 @@
 
 <resources>
 
-    <color name="color_secondary_daynight">@color/color_secondary_dark</color>
+    <color name="color_secondary">@color/color_secondary_dark</color>
 
-    <color name="status_bar_background_compat_daynight">@color/status_bar_background_compat_dark</color>
+    <color name="system_window_scrim">@color/system_window_scrim_dark</color>
 
-    <color name="system_window_scrim_daynight">@color/system_window_scrim_dark</color>
+    <color name="system_window_scrim_compat">@color/system_window_scrim_dark</color>
 </resources>
