@@ -1,4 +1,4 @@
-def aospIconloaderlibSrcDir = file('Launcher3/iconloaderlib')
+def aospIconloaderlibSrcDir = file('systemui/iconloaderlib')
 def generatedIconloaderlibSrcDir = file("$buildDir/generated/iconloaderlib")
 
 task generateIconloaderlibSrc {
