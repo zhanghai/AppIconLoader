@@ -2,7 +2,7 @@
 
 [![Android CI status](https://github.com/zhanghai/AppIconLoader/workflows/Android%20CI/badge.svg)](https://github.com/zhanghai/AppIconLoader/actions)
 
-Android app icon loader from AOSP Launcher3 [iconloaderlib](https://android.googlesource.com/platform/packages/apps/Launcher3/+/refs/heads/master/iconloaderlib/), with optional Glide and Coil integration.
+Android app icon loader from AOSP [iconloaderlib](https://android.googlesource.com/platform/frameworks/libs/systemui/+/refs/heads/master/iconloaderlib/), with optional Glide and Coil integration.
 
 This is not an officially supported Google product.
 
@@ -10,7 +10,7 @@ This is not an officially supported Google product.
 
 Because [`PackageManager.getApplicationIcon()`](https://developer.android.com/reference/android/content/pm/PackageManager#getApplicationIcon(android.content.pm.ApplicationInfo)) (or [`PackageItemInfo.loadIcon()`](https://developer.android.com/reference/android/content/pm/PackageItemInfo#loadIcon(android.content.pm.PackageManager))) just doesn't work well with [adaptive icons](https://developer.android.com/guide/practices/ui_guidelines/icon_design_adaptive). Non-adaptive icons usually have some shadow baked in (it's the recommended behavior), however adaptive icons never contain a shadow themselves, so we'll need to manually add the shadow or icons with a white background will just blend into our app's own background.
 
-This library packaged the AOSP Launcher3 implementation for loading app icons, which has proper shadow and badging logic, and added easy integration with Glide and Coil.
+This library packaged the AOSP iconloaderlib for loading app icons, which has proper shadow and badging logic, and added easy integration with Glide and Coil.
 
 Meanwhile, by passing `true` for the `shrinkNonAdaptiveIcons` parameter, this library can also synthesize adaptive icons for apps that don't have it.
 
@@ -33,7 +33,7 @@ implementation 'me.zhanghai.android.appiconloader:appiconloader-glide:1.3.0'
 implementation 'me.zhanghai.android.appiconloader:appiconloader-coil:1.3.0'
 // For using AppIconLoader directly.
 implementation 'me.zhanghai.android.appiconloader:appiconloader:1.3.0'
-// For using Launcher3 iconloaderlib directly.
+// For using iconloaderlib directly.
 implementation 'me.zhanghai.android.appiconloader:appiconloader-iconloaderlib:1.3.0'
 ```
 
@@ -84,9 +84,9 @@ imageView.loadAny(packageInfo)
 
 [`AppIconLoader`](appiconloader/src/main/java/me/zhanghai/android/appiconloader/AppIconLoader.java) is the API exposed by this library, and you can simply call `AppIconLoader.loadIcon()` to load an app icon. You can also use `AppIconLoader.getIconKey()` to generate a cache key for your loaded icon.
 
-### Launcher3 iconloaderlib
+### iconloaderlib
 
-Please refer to [its source code](https://android.googlesource.com/platform/packages/apps/Launcher3/+/refs/heads/master/iconloaderlib/).
+Please refer to [its source code](https://android.googlesource.com/platform/frameworks/libs/systemui/+/refs/heads/master/iconloaderlib/).
 
 ## License
 
