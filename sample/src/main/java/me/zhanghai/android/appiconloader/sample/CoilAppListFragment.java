@@ -16,13 +16,14 @@
 
 package me.zhanghai.android.appiconloader.sample;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import coil.Coil;
 import coil.ImageLoader;
-import coil.api.ImageLoaders;
+import coil.request.ImageRequest;
 
 public class CoilAppListFragment extends AppListFragment {
     @NonNull
@@ -41,8 +42,9 @@ public class CoilAppListFragment extends AppListFragment {
     @Override
     protected AppListAdapter.IconLoader onCreateIconLoader() {
         return (imageView, packageInfo) -> {
-            ImageLoader loader = Coil.loader();
-            loader.load(ImageLoaders.newLoadBuilder(loader, imageView.getContext())
+            Context context = imageView.getContext();
+            ImageLoader loader = Coil.imageLoader(context);
+            loader.enqueue(new ImageRequest.Builder(context)
                     .data(packageInfo)
                     .target(imageView)
                     .build());

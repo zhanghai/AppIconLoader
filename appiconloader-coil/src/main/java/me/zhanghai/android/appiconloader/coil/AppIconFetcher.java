@@ -26,7 +26,7 @@ import org.jetbrains.annotations.Nullable;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Px;
-import coil.bitmappool.BitmapPool;
+import coil.bitmap.BitmapPool;
 import coil.decode.DataSource;
 import coil.decode.Options;
 import coil.fetch.DrawableResult;

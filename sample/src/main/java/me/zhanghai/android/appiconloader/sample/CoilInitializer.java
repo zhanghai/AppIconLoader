@@ -22,7 +22,7 @@ import android.content.pm.PackageInfo;
 import androidx.annotation.NonNull;
 import coil.Coil;
 import coil.ComponentRegistry;
-import coil.ImageLoaderBuilder;
+import coil.ImageLoader;
 import me.zhanghai.android.appiconloader.coil.AppIconFetcher;
 
 public class CoilInitializer {
@@ -40,9 +40,9 @@ public class CoilInitializer {
             context = context.getApplicationContext();
             int iconSize = context.getResources().getDimensionPixelSize(R.dimen.app_icon_size);
             //noinspection KotlinInternalInJava
-            Coil.setDefaultImageLoader(new ImageLoaderBuilder(context)
+            Coil.setImageLoader(new ImageLoader.Builder(context)
                     .componentRegistry(new ComponentRegistry.Builder()
-                            .add(PackageInfo.class, new AppIconFetcher(iconSize, false, context))
+                            .add(new AppIconFetcher(iconSize, false, context), PackageInfo.class)
                             .build())
                     .build());
             sInitialized = true;

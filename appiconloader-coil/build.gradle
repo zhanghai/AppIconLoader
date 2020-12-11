@@ -23,7 +23,7 @@ android {
 
 dependencies {
     implementation 'androidx.annotation:annotation:1.1.0'
-    implementation 'io.coil-kt:coil-base:0.9.5'
+    implementation 'io.coil-kt:coil-base:1.1.0'
     implementation project(':appiconloader')
 }
 
