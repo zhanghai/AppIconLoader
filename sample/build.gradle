@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion '29.0.3'
+    compileSdkVersion 30
+    buildToolsVersion '30.0.2'
     defaultConfig {
         applicationId 'me.zhanghai.android.appiconloader.sample'
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode Integer.parseInt(VERSION_CODE)
         versionName VERSION
     }
