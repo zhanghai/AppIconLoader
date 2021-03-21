@@ -11,7 +11,7 @@ buildscript {
 
 allprojects {
     group GROUP
-    version VERSION
+    version VERSION_NAME
     repositories {
         google()
         jcenter()

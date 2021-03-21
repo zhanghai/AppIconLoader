@@ -7,7 +7,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 30
         versionCode Integer.parseInt(VERSION_CODE)
-        versionName VERSION
+        versionName VERSION_NAME
         consumerProguardFiles 'proguard-rules.pro'
     }
     compileOptions {
@@ -28,11 +28,11 @@ dependencies {
 }
 
 buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
-    }
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath 'com.vanniktech:gradle-maven-publish-plugin:0.14.2'
+  }
 }
-apply from: '../bintray-android.gradle'
+apply plugin: 'com.vanniktech.maven.publish'

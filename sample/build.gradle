@@ -8,7 +8,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 30
         versionCode Integer.parseInt(VERSION_CODE)
-        versionName VERSION
+        versionName VERSION_NAME
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
