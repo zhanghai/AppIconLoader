@@ -28,13 +28,13 @@ Gradle:
 
 ```gradle
 // For using with Glide.
-implementation 'me.zhanghai.android.appiconloader:appiconloader-glide:1.3.0'
+implementation 'me.zhanghai.android.appiconloader:appiconloader-glide:1.3.1'
 // For using with Coil.
-implementation 'me.zhanghai.android.appiconloader:appiconloader-coil:1.3.0'
+implementation 'me.zhanghai.android.appiconloader:appiconloader-coil:1.3.1'
 // For using AppIconLoader directly.
-implementation 'me.zhanghai.android.appiconloader:appiconloader:1.3.0'
+implementation 'me.zhanghai.android.appiconloader:appiconloader:1.3.1'
 // For using iconloaderlib directly.
-implementation 'me.zhanghai.android.appiconloader:appiconloader-iconloaderlib:1.3.0'
+implementation 'me.zhanghai.android.appiconloader:appiconloader-iconloaderlib:1.3.1'
 ```
 
 ## Usage
