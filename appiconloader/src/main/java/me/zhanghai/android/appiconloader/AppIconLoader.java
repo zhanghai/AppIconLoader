@@ -20,18 +20,15 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.graphics.Bitmap;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.Drawable;
 import android.os.UserHandle;
-
-import java.lang.reflect.Field;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.Px;
+
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 import me.zhanghai.android.appiconloader.iconloaderlib.BaseIconFactory;
 import me.zhanghai.android.appiconloader.iconloaderlib.BitmapInfo;
 
@@ -47,14 +44,7 @@ public class AppIconLoader {
             new ConcurrentLinkedQueue<>();
 
     static {
-        try {
-            Class<?> adaptiveIconDrawableInjectorClass = Class.forName("android.graphics.drawable.AdaptiveIconDrawableInjector");
-            Field maskPaintField = adaptiveIconDrawableInjectorClass.getDeclaredField("MASK_PAINT");
-            maskPaintField.setAccessible(true);
-            Paint maskPaint = (Paint)maskPaintField.get(null);
-            maskPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST));
-        } catch (Exception e) {
-        }
+        MiuiAdaptiveIconDrawableFix.apply();
     }
 
     public AppIconLoader(@Px int iconSize, boolean shrinkNonAdaptiveIcons,
