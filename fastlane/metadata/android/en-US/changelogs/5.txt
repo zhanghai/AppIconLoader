@@ -1,0 +1,3 @@
+- Fixed MIUI "optimization" that draws an extra shadow.
+- Fixed the sample app to show all apps on Android 11.
+- Published library to Maven Central.
