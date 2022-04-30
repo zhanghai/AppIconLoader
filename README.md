@@ -1,6 +1,6 @@
 # AppIconLoader
 
-[![Android CI status](https://github.com/zhanghai/AppIconLoader/workflows/Android%20CI/badge.svg)](https://github.com/zhanghai/AppIconLoader/actions)
+[![Android CI status](https://github.com/zhanghai/AppIconLoader/workflows/Android%20CI/badge.svg)](https://github.com/zhanghai/AppIconLoader/actions) [![GitHub release](https://img.shields.io/github/v/release/zhanghai/AppIconLoader)](https://github.com/zhanghai/AppIconLoader/releases) [![License](https://img.shields.io/github/license/zhanghai/AppIconLoader?color=blue)](LICENSE)
 
 Android app icon loader from AOSP [iconloaderlib](https://android.googlesource.com/platform/frameworks/libs/systemui/+/refs/heads/master/iconloaderlib/), with optional Glide and Coil integration.
 
