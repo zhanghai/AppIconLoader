@@ -42,10 +42,6 @@ public class AppIconLoader {
     private final ConcurrentLinkedQueue<IconFactory> mIconFactoryPool =
             new ConcurrentLinkedQueue<>();
 
-    static {
-        MiuiAdaptiveIconDrawableFix.apply();
-    }
-
     public AppIconLoader(@Px int iconSize, boolean shrinkNonAdaptiveIcons,
                          @NonNull Context context) {
         mIconSize = iconSize;
