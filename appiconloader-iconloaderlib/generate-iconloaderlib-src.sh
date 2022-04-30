@@ -25,7 +25,6 @@ LIBRARY_CLASSES_FILES=(
     #"BitmapInfo.java"
     "BitmapRenderer.java"
     "ColorExtractor.java"
-    "DotRenderer.java"
     "FixedScaleDrawable.java"
     "GraphicsUtils.java"
     "IconNormalizer.java"
