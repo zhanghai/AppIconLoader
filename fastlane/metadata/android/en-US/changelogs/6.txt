@@ -1,0 +1,2 @@
+- Synchronized iconloaderlib code from Android 12L.
+- Patched iconloaderlib to fix MIUI "optimization" reliably.
