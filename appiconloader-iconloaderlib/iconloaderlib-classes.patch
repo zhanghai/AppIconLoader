@@ -160,6 +160,23 @@
      public static BitmapInfo fromBitmap(@NonNull Bitmap bitmap) {
          return of(bitmap, 0);
      }
+--- BitmapRenderer.java
++++ BitmapRenderer.java
+@@ -25,11 +25,14 @@ import android.graphics.RectF;
+ import android.os.Build;
+ import android.os.Build.VERSION_CODES;
+
++import androidx.annotation.ChecksSdkIntAtLeast;
++
+ /**
+  * Interface representing a bitmap draw operation.
+  */
+ public interface BitmapRenderer {
+
++    @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.P)
+     boolean USE_HARDWARE_BITMAP = Build.VERSION.SDK_INT >= Build.VERSION_CODES.P;
+
+     static Bitmap createSoftwareBitmap(int width, int height, BitmapRenderer renderer) {
 --- FixedScaleDrawable.java
 +++ FixedScaleDrawable.java
 @@ -5,13 +5,17 @@ import android.content.res.Resources.Theme;
