@@ -23,12 +23,11 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.UserHandle;
 
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.Px;
-
-import java.util.concurrent.ConcurrentLinkedQueue;
-
 import me.zhanghai.android.appiconloader.iconloaderlib.BaseIconFactory;
 import me.zhanghai.android.appiconloader.iconloaderlib.BitmapInfo;
 
@@ -96,6 +95,8 @@ public class AppIconLoader {
         public IconFactory(@Px int iconBitmapSize, @NonNull Context context) {
             super(context, context.getResources().getConfiguration().densityDpi, iconBitmapSize,
                     true);
+
+            disableColorExtraction();
         }
 
         @NonNull
