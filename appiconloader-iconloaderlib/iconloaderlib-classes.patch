@@ -1,0 +1,164 @@
+--- BaseIconFactory.java
++++ BaseIconFactory.java
+@@ -361,12 +361,16 @@ public class BaseIconFactory implements AutoCloseable {
+         if (ATLEAST_OREO && icon instanceof AdaptiveIconDrawable) {
+             int offset = Math.max((int) Math.ceil(BLUR_FACTOR * size),
+                     Math.round(size * (1 - scale) / 2 ));
+-            icon.setBounds(offset, offset, size - offset, size - offset);
++            // Work around bug in MIUI AdaptiveIconDrawableInjector.
++            //icon.setBounds(offset, offset, size - offset, size - offset);
++            icon.setBounds(0, 0, size - 2 * offset, size - 2 * offset);
++            mCanvas.translate(offset, offset);
+             if (icon instanceof BitmapInfo.Extender) {
+                 ((Extender) icon).drawForPersistence(mCanvas);
+             } else {
+                 icon.draw(mCanvas);
+             }
++            mCanvas.translate(-offset, -offset);
+         } else {
+             if (icon instanceof BitmapDrawable) {
+                 BitmapDrawable bitmapDrawable = (BitmapDrawable) icon;
+--- BitmapInfo.java
++++ BitmapInfo.java
+@@ -15,37 +15,16 @@
+  */
+ package me.zhanghai.android.appiconloader.iconloaderlib;
+ 
+-import static me.zhanghai.android.appiconloader.iconloaderlib.GraphicsUtils.getExpectedBitmapSize;
+-
+ import android.content.Context;
+ import android.graphics.Bitmap;
+-import android.graphics.Bitmap.Config;
+-import android.graphics.BitmapFactory;
+ import android.graphics.Canvas;
+ import android.graphics.drawable.Drawable;
+-import android.os.Build;
+ import android.os.UserHandle;
+-import android.util.Log;
+ 
+ import androidx.annotation.NonNull;
+-import androidx.annotation.Nullable;
+-
+-import me.zhanghai.android.appiconloader.iconloaderlib.ThemedIconDrawable.ThemedBitmapInfo;
+-import me.zhanghai.android.appiconloader.iconloaderlib.cache.BaseIconCache;
+-
+-import java.io.ByteArrayOutputStream;
+-import java.io.IOException;
+ 
+ public class BitmapInfo {
+ 
+-    public static final Bitmap LOW_RES_ICON = Bitmap.createBitmap(1, 1, Config.ALPHA_8);
+-    public static final BitmapInfo LOW_RES_INFO = fromBitmap(LOW_RES_ICON);
+-
+-    public static final String TAG = "BitmapInfo";
+-
+-    protected static final byte TYPE_DEFAULT = 1;
+-    protected static final byte TYPE_THEMED = 2;
+-
+     public final Bitmap icon;
+     public final int color;
+ 
+@@ -54,83 +33,6 @@ public class BitmapInfo {
+         this.color = color;
+     }
+ 
+-    /**
+-     * Ideally icon should not be null, except in cases when generating hardware bitmap failed
+-     */
+-    public final boolean isNullOrLowRes() {
+-        return icon == null || icon == LOW_RES_ICON;
+-    }
+-
+-    public final boolean isLowRes() {
+-        return LOW_RES_ICON == icon;
+-    }
+-
+-    /**
+-     * Returns a serialized version of BitmapInfo
+-     */
+-    @Nullable
+-    public byte[] toByteArray() {
+-        if (isNullOrLowRes()) {
+-            return null;
+-        }
+-        ByteArrayOutputStream out = new ByteArrayOutputStream(getExpectedBitmapSize(icon) + 1);
+-        try {
+-            out.write(TYPE_DEFAULT);
+-            icon.compress(Bitmap.CompressFormat.PNG, 100, out);
+-            out.flush();
+-            out.close();
+-            return out.toByteArray();
+-        } catch (IOException e) {
+-            Log.w(TAG, "Could not write bitmap");
+-            return null;
+-        }
+-    }
+-
+-    /**
+-     * Returns a new icon based on the theme of the context
+-     */
+-    public FastBitmapDrawable newThemedIcon(Context context) {
+-        return newIcon(context);
+-    }
+-
+-    /**
+-     * Creates a drawable for the provided BitmapInfo
+-     */
+-    public FastBitmapDrawable newIcon(Context context) {
+-        FastBitmapDrawable drawable = isLowRes()
+-                ? new PlaceHolderIconDrawable(this, context)
+-                : new FastBitmapDrawable(this);
+-        drawable.mDisabledAlpha = GraphicsUtils.getFloat(context, R.attr.disabledIconAlpha, 1f);
+-        return drawable;
+-    }
+-
+-    /**
+-     * Returns a BitmapInfo previously serialized using {@link #toByteArray()};
+-     */
+-    @NonNull
+-    public static BitmapInfo fromByteArray(byte[] data, int color, UserHandle user,
+-            BaseIconCache iconCache, Context context) {
+-        if (data == null) {
+-            return null;
+-        }
+-        BitmapFactory.Options decodeOptions;
+-        if (BitmapRenderer.USE_HARDWARE_BITMAP && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+-            decodeOptions = new BitmapFactory.Options();
+-            decodeOptions.inPreferredConfig = Bitmap.Config.HARDWARE;
+-        } else {
+-            decodeOptions = null;
+-        }
+-        if (data[0] == TYPE_DEFAULT) {
+-            return BitmapInfo.of(
+-                    BitmapFactory.decodeByteArray(data, 1, data.length - 1, decodeOptions),
+-                    color);
+-        } else if (data[0] == TYPE_THEMED) {
+-            return ThemedBitmapInfo.decode(data, color, decodeOptions, user, iconCache, context);
+-        } else {
+-            return null;
+-        }
+-    }
+-
+     public static BitmapInfo fromBitmap(@NonNull Bitmap bitmap) {
+         return of(bitmap, 0);
+     }
+--- FixedScaleDrawable.java
++++ FixedScaleDrawable.java
+@@ -5,13 +5,17 @@ import android.content.res.Resources.Theme;
+ import android.graphics.Canvas;
+ import android.graphics.drawable.ColorDrawable;
+ import android.graphics.drawable.DrawableWrapper;
++import android.os.Build;
+ import android.util.AttributeSet;
+ 
++import androidx.annotation.RequiresApi;
++
+ import org.xmlpull.v1.XmlPullParser;
+ 
+ /**
+  * Extension of {@link DrawableWrapper} which scales the child drawables by a fixed amount.
+  */
++@RequiresApi(Build.VERSION_CODES.O)
+ public class FixedScaleDrawable extends DrawableWrapper {
+ 
+     // TODO b/33553066 use the constant defined in MaskableIconDrawable
