@@ -19,3 +19,6 @@ jobs:
         java-version: '11'
     - name: Build with Gradle
       run: ./gradlew assembleDebug lintVitalRelease
+    - uses: actions/upload-artifact@v3
+      with:
+        path: sample/build/outputs/apk/debug/*.apk
