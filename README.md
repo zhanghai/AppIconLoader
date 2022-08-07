@@ -70,6 +70,7 @@ Coil.setImageLoader {
         .components {
             add(AppIconFetcher.Factory(iconSize, false, context), PackageInfo::class.java)
         }
+        .build()
 }
 ```
 
