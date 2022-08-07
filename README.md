@@ -65,12 +65,11 @@ GlideApp.with(imageView)
 
 ```kotlin
 val iconSize = context.resources.getDimensionPixelSize(R.dimen.app_icon_size)
-Coil.setDefaultImageLoader {
-    ImageLoader(context) {
-        componentRegistry {
-            add(AppIconFetcher(iconSize, false, context))
+Coil.setImageLoader {
+    ImageLoader.Builder(context)
+        .components {
+            add(AppIconFetcher.Factory(iconSize, false, context), PackageInfo::class.java)
         }
-    }
 }
 ```
 

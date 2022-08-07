@@ -41,8 +41,8 @@ public class CoilInitializer {
             int iconSize = context.getResources().getDimensionPixelSize(R.dimen.app_icon_size);
             //noinspection KotlinInternalInJava
             Coil.setImageLoader(new ImageLoader.Builder(context)
-                    .componentRegistry(new ComponentRegistry.Builder()
-                            .add(new AppIconFetcher(iconSize, false, context), PackageInfo.class)
+                    .components(new ComponentRegistry.Builder()
+                            .add(new AppIconFetcher.Factory(iconSize, false, context), PackageInfo.class)
                             .build())
                     .build());
             sInitialized = true;
