@@ -21,8 +21,9 @@ import android.content.pm.PackageInfo;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Px;
+
+import org.jetbrains.annotations.NotNull;
 
 import coil.ImageLoader;
 import coil.decode.DataSource;
@@ -34,23 +35,23 @@ import kotlin.coroutines.Continuation;
 import me.zhanghai.android.appiconloader.AppIconLoader;
 
 public class AppIconFetcher implements Fetcher {
-    @NonNull
+    @NotNull
     private final AppIconLoader mLoader;
-    @NonNull
+    @NotNull
     private final Context mContext;
-    @NonNull
+    @NotNull
     private final PackageInfo mPackageInfo;
 
     public AppIconFetcher(@Px int iconSize, boolean shrinkNonAdaptiveIcons,
-                          @NonNull Context context, @NonNull PackageInfo packageInfo) {
+                          @NotNull Context context, @NotNull PackageInfo packageInfo) {
         mContext = context;
         mLoader = new AppIconLoader(iconSize, shrinkNonAdaptiveIcons, context);
         mPackageInfo = packageInfo;
     }
 
-    @NonNull
+    @NotNull
     @Override
-    public Object fetch(@NonNull Continuation<? super FetchResult> continuation) {
+    public Object fetch(@NotNull Continuation<? super FetchResult> continuation) {
         Bitmap icon = mLoader.loadIcon(mPackageInfo.applicationInfo);
         return new DrawableResult(new BitmapDrawable(mContext.getResources(), icon), true,
                 DataSource.DISK);
@@ -60,21 +61,21 @@ public class AppIconFetcher implements Fetcher {
         @Px
         private final int mIconSize;
         private final boolean mShrinkNonAdaptiveIcons;
-        @NonNull
+        @NotNull
         private final Context mContext;
 
         public Factory(@Px int iconSize, boolean shrinkNonAdaptiveIcons,
-                       @NonNull Context context) {
+                       @NotNull Context context) {
             mIconSize = iconSize;
             mShrinkNonAdaptiveIcons = shrinkNonAdaptiveIcons;
             mContext = context.getApplicationContext();
         }
 
-        @NonNull
+        @NotNull
         @Override
-        public Fetcher create(@NonNull PackageInfo packageInfo,
-                              @NonNull Options options,
-                              @NonNull ImageLoader imageLoader) {
+        public Fetcher create(@NotNull PackageInfo packageInfo,
+                              @NotNull Options options,
+                              @NotNull ImageLoader imageLoader) {
             return new AppIconFetcher(mIconSize, mShrinkNonAdaptiveIcons, mContext, packageInfo);
         }
     }
