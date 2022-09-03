@@ -24,6 +24,7 @@ import coil.Coil;
 import coil.ComponentRegistry;
 import coil.ImageLoader;
 import me.zhanghai.android.appiconloader.coil.AppIconFetcher;
+import me.zhanghai.android.appiconloader.coil.AppIconKeyer;
 
 public class CoilInitializer {
     private static boolean sInitialized = false;
@@ -39,10 +40,11 @@ public class CoilInitializer {
             }
             context = context.getApplicationContext();
             int iconSize = context.getResources().getDimensionPixelSize(R.dimen.app_icon_size);
-            //noinspection KotlinInternalInJava
             Coil.setImageLoader(new ImageLoader.Builder(context)
-                    .componentRegistry(new ComponentRegistry.Builder()
-                            .add(new AppIconFetcher(iconSize, false, context), PackageInfo.class)
+                    .components(new ComponentRegistry.Builder()
+                            .add(new AppIconKeyer(), PackageInfo.class)
+                            .add(new AppIconFetcher.Factory(iconSize, false, context),
+                                    PackageInfo.class)
                             .build())
                     .build());
             sInitialized = true;

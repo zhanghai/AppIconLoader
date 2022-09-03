@@ -17,56 +17,60 @@
 package me.zhanghai.android.appiconloader.coil;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.Px;
-import coil.bitmap.BitmapPool;
+import coil.ImageLoader;
 import coil.decode.DataSource;
-import coil.decode.Options;
 import coil.fetch.DrawableResult;
 import coil.fetch.FetchResult;
 import coil.fetch.Fetcher;
-import coil.size.Size;
+import coil.request.Options;
 import kotlin.coroutines.Continuation;
 import me.zhanghai.android.appiconloader.AppIconLoader;
 
-public class AppIconFetcher implements Fetcher<PackageInfo> {
+public class AppIconFetcher implements Fetcher {
+    @NonNull
+    private final Options mOptions;
     @NonNull
     private final AppIconLoader mLoader;
     @NonNull
-    private final Context mContext;
+    private final ApplicationInfo mApplicationInfo;
 
-    public AppIconFetcher(@Px int iconSize, boolean shrinkNonAdaptiveIcons,
-                          @NonNull Context context) {
-        context = context.getApplicationContext();
-        mLoader = new AppIconLoader(iconSize, shrinkNonAdaptiveIcons, context);
-        mContext = context;
+    public AppIconFetcher(@NonNull Options options, @NonNull AppIconLoader loader,
+                          @NonNull ApplicationInfo applicationInfo) {
+        mOptions = options;
+        mLoader = loader;
+        mApplicationInfo = applicationInfo;
     }
 
     @Nullable
     @Override
-    public Object fetch(@NotNull BitmapPool bitmapPool, @NotNull PackageInfo packageInfo,
-                        @NotNull Size size, @NotNull Options options,
-                        @NotNull Continuation<? super FetchResult> continuation) {
-        Bitmap icon = mLoader.loadIcon(packageInfo.applicationInfo);
-        return new DrawableResult(new BitmapDrawable(mContext.getResources(), icon), true,
-                DataSource.DISK);
+    public FetchResult fetch(@NonNull Continuation<? super FetchResult> continuation) {
+        Bitmap icon = mLoader.loadIcon(mApplicationInfo);
+        return new DrawableResult(new BitmapDrawable(mOptions.getContext().getResources(), icon),
+                true, DataSource.DISK);
     }
 
-    @Override
-    public boolean handles(@NotNull PackageInfo packageInfo) {
-        return true;
-    }
+    public static class Factory implements Fetcher.Factory<PackageInfo> {
+        @NonNull
+        private final AppIconLoader mLoader;
 
-    @Nullable
-    @Override
-    public String key(@NotNull PackageInfo packageInfo) {
-        return AppIconLoader.getIconKey(packageInfo, mContext);
+        public Factory(@Px int iconSize, boolean shrinkNonAdaptiveIcons, @NonNull Context context) {
+            context = context.getApplicationContext();
+            mLoader = new AppIconLoader(iconSize, shrinkNonAdaptiveIcons, context);
+        }
+
+        @Nullable
+        @Override
+        public Fetcher create(@NonNull PackageInfo packageInfo, @NonNull Options options,
+                              @NonNull ImageLoader imageLoader) {
+            return new AppIconFetcher(options, mLoader, packageInfo.applicationInfo);
+        }
     }
 }

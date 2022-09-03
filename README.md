@@ -65,13 +65,14 @@ GlideApp.with(imageView)
 
 ```kotlin
 val iconSize = context.resources.getDimensionPixelSize(R.dimen.app_icon_size)
-Coil.setDefaultImageLoader {
-    ImageLoader(context) {
-        componentRegistry {
-            add(AppIconFetcher(iconSize, false, context))
+Coil.setImageLoader(
+    ImageLoader.Builder(context)
+        .components {
+            add(AppIconKeyer())
+            add(AppIconFetcher.Factory(iconSize, false, context))
         }
-    }
-}
+        .build()
+)
 ```
 
 After the setup above, Coil will support loading app icons with the app's `PackageInfo`.
