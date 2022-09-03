@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 31
-    buildToolsVersion '32.0.0'
+    compileSdkVersion 33
+    buildToolsVersion '33.0.0'
     defaultConfig {
         applicationId 'me.zhanghai.android.appiconloader.sample'
         minSdkVersion 21
-        targetSdkVersion 31
+        targetSdkVersion 33
         versionCode Integer.parseInt(VERSION_CODE)
         versionName VERSION_NAME
     }
@@ -36,15 +36,16 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    def androidx_lifecycle_version = '2.4.1'
+    implementation 'androidx.appcompat:appcompat:1.5.0'
+    def androidx_lifecycle_version = '2.5.1'
     implementation "androidx.lifecycle:lifecycle-viewmodel:$androidx_lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata:$androidx_lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-common-java8:$androidx_lifecycle_version"
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation 'com.google.android.material:material:1.5.0'
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+    implementation 'com.google.android.material:material:1.6.1'
+    def glide_version = '4.13.2'
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
     implementation 'io.coil-kt:coil:1.2.2'
     implementation 'me.zhanghai.android.fastscroll:library:1.1.8'
     implementation project(':appiconloader')
