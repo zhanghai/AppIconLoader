@@ -1,0 +1,1 @@
+- Migrated appiconloader-coil to Coil 2.
